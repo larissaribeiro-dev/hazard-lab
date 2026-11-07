@@ -1,0 +1,32 @@
+{
+  "name": "hazard-lab",
+  "version": "1.0.0",
+  "description": "Static-1 hazard analyzer and timing visualizer for two-level logic circuits",
+  "private": true,
+  "type": "module",
+  "author": "Larissa Rafaela Ribeiro de Souza (https://github.com/larissaribeiro-dev)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larissaribeiro-dev/hazard-lab.git"
+  },
+  "bugs": {
+    "url": "https://github.com/larissaribeiro-dev/hazard-lab/issues"
+  },
+  "homepage": "https://github.com/larissaribeiro-dev/hazard-lab#readme",
+  "keywords": [
+    "digital-logic",
+    "karnaugh-map",
+    "static-hazard",
+    "glitch",
+    "logic-simulator",
+    "education"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "test": "node --test"
+  }
+}
