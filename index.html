@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hazard Lab · Glitches em circuitos lógicos</title>
+  <meta name="description" content="Encontre hazards estáticos em circuitos AND-OR de dois níveis e veja o glitch no tempo.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="file-warning" class="warning" role="alert" hidden>
+    A página foi aberta direto do disco, e o navegador bloqueia os módulos JavaScript nesse modo. Na pasta do projeto, rode <code>python -m http.server 8080</code> e acesse <code>http://localhost:8080</code>.
+  </div>
+
+  <div class="app">
+    <header class="bar">
+      <div class="brand">
+        <h1>Hazard Lab</h1>
+        <p>Encontre glitches escondidos em circuitos lógicos de dois níveis e veja como corrigi-los.</p>
+      </div>
+      <div class="fn">
+        <div class="fn-row">
+          <label class="expr">
+            <span>F =</span>
+            <input id="expr" value="A'C + AD + AB'" spellcheck="false" autocomplete="off" aria-describedby="error hint">
+          </label>
+          <div id="examples" class="chips" aria-label="Exemplos"></div>
+        </div>
+        <p id="error" class="error" role="alert"></p>
+        <p id="hint" class="hint">Variáveis de A a F. Use <code>'</code> para complemento e <code>+</code> para OR. O produto é a justaposição: <code>A'C</code>.</p>
+      </div>
+    </header>
+
+    <section id="stats" class="stats" aria-label="Resumo da análise">
+      <article class="stat"><h3>Variáveis</h3><p class="v"><span id="k-vars">0</span><span id="b-vars" class="badge info"></span></p></article>
+      <article class="stat"><h3>Termos produto</h3><p class="v"><span id="k-terms">0</span><span id="b-terms" class="badge info"></span></p></article>
+      <article class="stat"><h3>Hazards estáticos-1</h3><p class="v"><span id="k-hz">0</span><span id="b-hz" class="badge info"></span></p></article>
+      <article class="stat"><h3>Glitch na transição exibida</h3><p class="v"><span id="k-glitch">0</span><span id="b-glitch" class="badge info"></span></p></article>
+    </section>
+
+    <main id="dash" class="grid">
+      <section class="card scope" aria-labelledby="t-scope">
+        <div class="card-head">
+          <div>
+            <h2 id="t-scope">Osciloscópio lógico</h2>
+            <p id="summary" class="summary"></p>
+          </div>
+          <div class="actions">
+            <div id="tabs" class="tabs" role="group" aria-label="Circuito exibido" hidden>
+              <button data-view="original" aria-pressed="true">Original</button>
+              <button data-view="fixed" aria-pressed="false">Corrigido</button>
+            </div>
+            <button id="reverse" class="ghost">Inverter sentido</button>
+          </div>
+        </div>
+        <div id="scope-body" class="scroll"></div>
+        <div class="delays">
+          <label><span>Atraso do inversor <output id="v-not">1</output> ns</span><input id="d-not" type="range" min="0" max="5" value="1"></label>
+          <label><span>Atraso do AND <output id="v-and">1</output> ns</span><input id="d-and" type="range" min="1" max="5" value="1"></label>
+          <label><span>Atraso do OR <output id="v-or">1</output> ns</span><input id="d-or" type="range" min="1" max="5" value="1"></label>
+        </div>
+      </section>
+
+      <section class="card km-panel" aria-labelledby="t-kmap">
+        <div class="card-head">
+          <h2 id="t-kmap">Mapa de Karnaugh</h2>
+          <ul id="legend" class="legend"></ul>
+        </div>
+        <div class="scroll km-scroll"><table id="kmap"></table></div>
+        <p class="foot">Cada ponto colorido é um termo que cobre a célula. O número pequeno é o mintermo.</p>
+        <div id="splitter" class="splitter" role="separator" aria-orientation="horizontal" aria-label="Redimensionar mapa de Karnaugh e hazards" title="Arraste para redimensionar · duplo clique para restaurar" tabindex="0"></div>
+      </section>
+
+      <section id="hz-panel" class="card hz-panel" aria-labelledby="t-hz">
+        <div class="card-head"><h2 id="t-hz">Hazards estáticos de nível 1</h2></div>
+        <div class="hz-scroll">
+          <div id="hazards"></div>
+          <div id="fix"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>Modelo de atraso de transporte com atrasos inteiros em ns. Simulador educacional, não substitui análise de timing de um fluxo de síntese.</footer>
+  </div>
+
+  <script>
+    if (location.protocol === "file:") document.getElementById("file-warning").hidden = false;
+  </script>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
