@@ -30,7 +30,7 @@ cobertura sem hazards:  A'C + AD + AB' + B'C + CD
 - Entrada em soma de produtos com até 6 variáveis (`A` a `F`), com validação e mensagens de erro
   - Complemento com `A'` ou `!A`, produto por justaposição, `*` ou `.`, e letras minúsculas são aceitas
 - Detecção de todos os hazards estáticos de nível 1 para mudança de uma variável por vez
-- Mapa de Karnaugh de qualquer tamanho, com a cobertura de cada termo marcada por cor
+- Mapa de Karnaugh de 1 a 6 variáveis, com a cobertura de cada termo marcada por cor
 - Correção automática: cada par descoberto recebe um implicante primo (termo de consenso)
 - Simulador em nível de portas com atraso configurável para inversor, AND e OR
 - Formas de onda de todos os nós do circuito, com o glitch destacado
@@ -86,16 +86,19 @@ Abra `http://localhost:8080`. Se a página for aberta direto do disco, ela exibe
 
 ## Publicar no Firebase Hosting
 
-O projeto é estático, então não precisa de build. O `firebase.json` já aponta a raiz como pasta pública e deixa de fora `.git`, testes, `docs/`, `package.json`, README e LICENSE.
+O projeto é estático, então não precisa de build. O `firebase.json` já aponta a raiz como pasta pública e deixa de fora `.git`, `.github`, testes, `docs/`, `package.json`, README e LICENSE.
+
+O `.firebaserc` deste repositório aponta para o projeto da autora (`hazard-lab`). Para publicar a sua cópia, crie um projeto próprio e troque o ID nesse arquivo:
 
 ```bash
 npm install -g firebase-tools
 firebase login
-firebase use --add        # escolha o projeto e dê o alias "default"
+firebase projects:create SEU-PROJECT-ID --display-name "Hazard Lab"
+# edite o .firebaserc e troque "hazard-lab" por SEU-PROJECT-ID
 firebase deploy --only hosting
 ```
 
-O site fica em `https://SEU-PROJECT-ID.web.app`.
+O site fica em `https://SEU-PROJECT-ID.web.app`. Use um projeto novo: o deploy substitui o conteúdo de qualquer site que já esteja publicado no projeto escolhido.
 
 ## Testes
 
@@ -127,7 +130,12 @@ hazard-lab/
 │   └── timing.test.js
 ├── css/
 │   └── style.css
+├── docs/
+│   └── screenshot.png
 ├── .github/workflows/ci.yml
+├── .firebaserc
+├── .gitignore
+├── firebase.json
 ├── index.html
 ├── package.json
 ├── LICENSE
@@ -137,6 +145,7 @@ hazard-lab/
 ## Limitações
 
 - Atrasos inteiros em ns e iguais para todas as portas do mesmo tipo
+- O divisor de painéis só existe no layout em painéis (janela com pelo menos 1100 px de largura e 620 px de altura); em telas menores os blocos ficam empilhados e a página rola normalmente
 - Apenas circuitos AND-OR de dois níveis, com entradas e complementos disponíveis via inversores
 - O mapa de Karnaugh para 5 e 6 variáveis usa a mesma ordenação em código Gray, e a adjacência também vale entre células espelhadas
 
