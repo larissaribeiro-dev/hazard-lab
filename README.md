@@ -80,6 +80,19 @@ python -m http.server 8080
 
 Abra `http://localhost:8080`. Se a página for aberta direto do disco, ela exibe um aviso no topo explicando o motivo. No Windows, se `python` não for reconhecido, use `py -m http.server 8080`.
 
+## Publicar no Firebase Hosting
+
+O projeto é estático, então não precisa de build. O `firebase.json` já aponta a raiz como pasta pública e deixa de fora testes, `package.json`, README e LICENSE.
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase use --add        # escolha o projeto e dê o alias "default"
+firebase deploy --only hosting
+```
+
+O site fica em `https://SEU-PROJECT-ID.web.app`.
+
 ## Testes
 
 Requer Node.js 20 ou superior.
