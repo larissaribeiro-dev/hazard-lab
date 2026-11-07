@@ -11,7 +11,7 @@ Analisador de hazards estáticos de nível 1 em circuitos AND-OR de dois níveis
 
 A ideia é mostrar uma coisa que a tabela-verdade esconde: uma função pode estar logicamente correta e, mesmo assim, a saída cair para 0 por alguns nanossegundos quando uma única entrada muda, porque os caminhos do circuito têm atrasos diferentes.
 
-**Demo online:** [hazard-lab-larissa.web.app](https://hazard-lab-larissa.web.app)
+**Demo online:** [hazard-lab.web.app](https://hazard-lab.web.app)
 
 ![Hazard Lab mostrando o glitch de F = A'C + AD + AB' no osciloscópio lógico](docs/screenshot.png)
 
